@@ -16,5 +16,10 @@ def playlists_index():
     """Show all playlists."""
     return render_template('playlists_index.html', playlists=playlists.find())
 
+@app.route('/playlists/new')
+def playlists_new():
+    """Create a new playlist."""
+    return render_template('playlists_new.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
