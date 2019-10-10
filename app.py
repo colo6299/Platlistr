@@ -28,7 +28,7 @@ def playlists_show(game_id):
     return render_template('playlists_show.html', game=game)
 
 
-@app.route('/games/<games_id>/edit')  # crrnt
+@app.route('/games/<game_id>/edit')  # crrnt
 def playlists_edit(game_id):
     """Show the edit form for a playlist."""
     game = games.find_one({'_id': ObjectId(game_id)})
@@ -46,7 +46,7 @@ def playlists_update(game_id):
     games.update_one(
         {'_id': ObjectId(game_id)},
         {'$set': updated_playlist})
-    return render_template('playlists_show', game_id=game_id)
+    return redirect(url_for('playlists_show', game_id=game_id))
 
 
 @app.route('/games', methods=['POST'])
@@ -55,6 +55,7 @@ def playlists_submit():
     game = {
         'title': request.form.get('title'),
         'description': request.form.get('description'),
+        'price': request.form.get('price'),
         'videos': request.form.get('videos').split()
     }
     game_id = games.insert_one(game).inserted_id
