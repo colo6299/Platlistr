@@ -1,21 +1,34 @@
+<!-- templates/partials/playlists_form.html -->
+
 <fieldset>
-    <legend>Edit Playlist</legend>
+    <legend>{{ title }}</legend>
     <!-- TITLE -->
-    <div class='form-group'>
-        <label for='playlist-title'>Title</label><br>
-        <input class='form-control' id='playlist-title' type='text' name='title' value='{{ playlist.title }}'/>
-    </div>
-
+    <p>
+        <label for='game-title'>Title</label><br>
+        <input id='game-title' type='text' name='title' value='{{ game.title }}'/>
+    </p>
+    
     <!-- DESCRIPTION -->
-    <div class='form-group'>
-        <label for='description'>Description</label><br>
-        <input class='form-control' id='description' type='text' name='description' value='{{ playlist.description }}' />
-    </div>
+    <p>
+      <label for='description'>Description</label><br>
+      <input id='description' type='text' name='description' value='{{ game.description }}' />
+    </p>
 
-    <!-- DESCRIPTION -->
-    <div class='form-group'>
-        <label for='playlist-videos'>Videos</label><br/>
-        <p class='text-muted'>Add videos in the form of 'https://youtube.com/embed/KEY'. Separate with a newline.</p>
-        <textarea class='form-control' id='playlist-videos' name='videos' rows='10' />{{ "\n".join(playlist.videos) }}</textarea>
-    </div>
-</fieldset>
+    <!-- PRICE -->
+    <p>
+        <label for='description'>Price</label><br>
+        <input id='price' type='text' name='price' value='{{ game.price }}' />
+    </p>
+    
+    <!-- VIDEO LINKS -->
+    <p>
+      <label for='game-videos'>Trailers</label><br>
+      <p>Add trailers in the form of 'https://youtube.com/embed/KEY'. Separate with a newline.</p>
+      <textarea id='game-videos' name='videos' rows='10'>{{ "\n".join(game.videos) }}</textarea>
+    </p>
+    </fieldset>
+    
+    <!-- BUTTON -->
+    <p>
+        <button type='submit'>Save Game</button>
+    </p>

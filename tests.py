@@ -26,7 +26,7 @@ class PlaylistsTests(TestCase):
         """Test showing a single playlist."""
         mock_find.return_value = sample_playlist
 
-        result = self.client.get(f'/playlists/{sample_playlist_id}')
+        result = self.client.get(f'/games/{sample_playlist_id}')
         self.assertEqual(result.status, '200 OK')
         self.assertIn(b'Cat Videos', result.data)
 
@@ -35,7 +35,7 @@ class PlaylistsTests(TestCase):
         """Test editing a single playlist."""
         mock_find.return_value = sample_playlist
 
-        result = self.client.get(f'/playlists/{sample_playlist_id}/edit')
+        result = self.client.get(f'/games/{sample_playlist_id}/edit')
         self.assertEqual(result.status, '200 OK')
         self.assertIn(b'Cat Videos', result.data)
 
@@ -50,7 +50,7 @@ class PlaylistsTests(TestCase):
 
     def test_new(self):
         """Test the new playlist creation page."""
-        result = self.client.get('/playlists/new')
+        result = self.client.get('/games/new')
         self.assertEqual(result.status, '200 OK')
         self.assertIn(b'New Playlist', result.data)
 
@@ -63,7 +63,7 @@ class PlaylistsTests(TestCase):
     @mock.patch('pymongo.collection.Collection.insert_one')
     def test_submit_playlist(self, mock_insert):
         """Test submitting a new playlist."""
-        result = self.client.post('/playlists', data=sample_form_data)
+        result = self.client.post('/games', data=sample_form_data)
 
         # After submitting, should redirect to that playlist's page
         self.assertEqual(result.status, '302 FOUND')
@@ -71,7 +71,7 @@ class PlaylistsTests(TestCase):
         
     @mock.patch('pymongo.collection.Collection.update_one')
     def test_update_playlist(self, mock_update):
-        result = self.client.post(f'/playlists/{sample_playlist_id}', data=sample_form_data)
+        result = self.client.post(f'/games/{sample_playlist_id}', data=sample_form_data)
 
         self.assertEqual(result.status, '302 FOUND')
         mock_update.assert_called_with({'_id': sample_playlist_id}, {'$set': sample_playlist})
@@ -79,7 +79,7 @@ class PlaylistsTests(TestCase):
     @mock.patch('pymongo.collection.Collection.delete_one')
     def test_delete_playlist(self, mock_delete):
         form_data = {'_method': 'DELETE'}
-        result = self.client.post(f'/playlists/{sample_playlist_id}/delete', data=form_data)
+        result = self.client.post(f'/games/{sample_playlist_id}/delete', data=form_data)
         self.assertEqual(result.status, '302 FOUND')
         mock_delete.assert_called_with({'_id': sample_playlist_id})
 
